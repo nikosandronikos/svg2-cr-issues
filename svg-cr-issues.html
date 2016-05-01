@@ -1,0 +1,106 @@
+<script type="text/javascript" src="svg-cr-issues.js"></script>
+<style>
+    html {
+        font-family: sans-serif;
+    }
+    
+    * {
+        box-sizing: border-box;
+    }
+
+    .table-message {
+        display: table;
+        table-layout: fixed;
+        color: #666;
+        border: 1px solid #e5e5e5;
+        width: 100%;
+        padding-left: 0;
+        margin-top: 0;
+    }
+
+    #issues {
+        position: relative;
+        margin-right: auto;
+        margin-left: auto;
+        width: 900px;
+    }
+
+    .chapter {
+        width: 800px;
+    }
+
+    .table-header {
+        margin-top: 20px;
+        margin-bottom: -1px;
+        background-color: #f8f8f8;
+        border: 1px solid #e5e5e5;
+        border-radius: 3px 3px 0 0;
+        width: 100%;
+        padding-top: 0.2em;
+        padding-bottom: 0.5em;
+        padding-left: 20px;
+    }
+    
+    .table-header > .metadata {
+    }
+
+    .table-header > a, .table-header > a:visited {
+        text-decoration: none;
+        color: #222;
+        font-size: 1.5em;
+    }
+
+    .table-body > li > div > a:hover{
+        color: blue;
+    }
+
+    .table-header > .num-open{
+        color: red;
+        padding-left: 2em;
+    }
+    .table-header > .num-closed {
+        color: green;
+        padding-left: 2em;
+    }
+
+    .table-body {
+        display: table;
+        table-layout: fixed;
+        color: #666;
+        border: 1px solid #e5e5e5;
+        width: 100%;
+        padding-left: 0;
+        margin-top: 0;
+        margin-bottom: -1;
+    }
+
+    .table-body > li {
+        position: relative;
+        display: table-row;
+        list-style: none;
+    }
+
+    .table-body > li > div {
+        border-bottom: 1px solid #e5e5e5;
+        padding-top: 12px;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+    }
+
+    .table-body > li > div > a, .table-body > li > div > a:visited {
+        text-decoration: none;
+        color: #555;
+    }
+
+    .table-body > li > div > a:hover{
+        color: blue;
+    }
+
+    .closed-issues {
+        text-decoration: line-through;
+    }   
+
+</style>
+<div id="issues">
+</div>
