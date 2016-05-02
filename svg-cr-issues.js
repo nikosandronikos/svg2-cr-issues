@@ -72,6 +72,7 @@ function new_chapter_div(parent) {
 function new_issue_list(parent, title, owner) {
     var header = document.createElement("div");
     header.setAttribute("class", "table-header");
+    header.setAttribute("id", title);
     parent.appendChild(header);
 
     var link = document.createElement("a");
@@ -80,7 +81,6 @@ function new_issue_list(parent, title, owner) {
     header.appendChild(link);
 
     var open_list = document.createElement("ul");
-    open_list.setAttribute("id", title);
     open_list.setAttribute("class", "table-body");
     parent.appendChild(open_list);
 
@@ -107,6 +107,34 @@ function write_list_header(list, open, closed) {
     closed_elem .setAttribute("class", "num-closed");
     closed_elem .innerHTML = closed + " Closed";
     list.header.insertBefore(closed_elem, list.header.querySelector(".metadata"));
+}
+
+function output_chapter_summary(chapter, owner, nopen, nclosed) {
+    var list = document.querySelector("#issue-summary-list");
+
+    var title_cell = document.createElement("td");
+    title_cell.setAttribute("class", "index-cell");
+
+    var index_link = document.createElement("a");
+    index_link.setAttribute("href", "#"+chapter);
+    index_link.innerHTML = chapter;
+    title_cell.appendChild(index_link);
+
+    var owner_cell = document.createElement("td");
+    owner_cell.setAttribute("class", "index-cell");
+    owner_cell.innerHTML = owner;
+
+    var open_count = document.createElement("td");
+    open_count.setAttribute("class", "index-cell num-open");
+    open_count.innerHTML = nopen;
+
+    var list_item = document.createElement("tr");
+    list_item.appendChild(title_cell);
+    list_item.appendChild(owner_cell);
+    list_item.appendChild(open_count);
+    //list_item.appendChild(closed_count);
+
+    list.appendChild(list_item);
 }
 
 function output_list(issues) {
@@ -139,6 +167,7 @@ function output_list(issues) {
                 }
             }
             write_list_header(ui_issue_list, open, closed);
+            output_chapter_summary(chapter_name, chapter.owner, open, closed);
         } else {
             output_message(div, "No issues");
         }

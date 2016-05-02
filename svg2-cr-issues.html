@@ -12,17 +12,21 @@
         display: table;
         table-layout: fixed;
         color: #666;
-        border: 1px solid #e5e5e5;
-        width: 100%;
-        padding-left: 0;
+        padding-top: 0.5em;
+        padding-left: 20px;
         margin-top: 0;
+    }
+
+    .table-message::before {
+        content: "\1F44D\1F3FB";
+        padding-right: 1em;
     }
 
     #issues {
         position: relative;
-        margin-right: auto;
-        margin-left: auto;
-        width: 900px;
+        left: 25%;
+        padding-left: 2em;
+        width: 75%;
     }
 
     .chapter {
@@ -31,11 +35,9 @@
 
     .table-header {
         margin-top: 20px;
-        margin-bottom: -1px;
         background-color: #f8f8f8;
         border: 1px solid #e5e5e5;
         border-radius: 3px 3px 0 0;
-        width: 100%;
         padding-top: 0.2em;
         padding-bottom: 0.5em;
         padding-left: 20px;
@@ -45,13 +47,8 @@
     }
 
     .table-header > a, .table-header > a:visited {
-        text-decoration: none;
         color: #222;
         font-size: 1.5em;
-    }
-
-    .table-body > li > div > a:hover{
-        color: blue;
     }
 
     .table-header > .num-open{
@@ -88,12 +85,12 @@
         padding-left: 20px;
     }
 
-    .table-body > li > div > a, .table-body > li > div > a:visited {
+    a, a:visited {
         text-decoration: none;
         color: #555;
     }
 
-    .table-body > li > div > a:hover{
+    a:hover{
         color: blue;
     }
 
@@ -101,6 +98,57 @@
         text-decoration: line-through;
     }   
 
+    #issue_summary {
+        position: fixed;
+        top: 20px;
+        left: 2px;
+        width: 25%;
+        
+    }
+
+    #issue_summary > h2 {
+        margin-bottom: 0em; 
+    }
+
+    .index-table {
+        padding-left: 0px;
+        border: 1px solid #e5e5e5;
+    }
+
+    .index-table td {
+        padding-left: 0.5em;
+    }
+
+    .index-table > thead td {
+        background-color: #f8f8f8;
+        font-weight: bold;
+    }
+
+    .index-table > ul > li, .index-table > .index-table-header {
+        list-style: none;
+    }
+
+    .index-cell {
+        color: #666;
+        padding-right: 0.5em;
+    }
+        
+    .index-table > tbody > tr:nth-child(even) {
+        background-color: #f8f8f8;
+    }
+
 </style>
-<div id="issues">
+<div id="issue_summary">
+  <table class="index-table">
+    <thead>
+      <tr>
+        <td>Chapter</td>
+        <td>Owner</td>
+        <td>Open</td>
+      </tr>
+    </thead>
+    <tbody id="issue-summary-list">
+    </tbody>
+  </table>
 </div>
+<div id="issues"> </div>
