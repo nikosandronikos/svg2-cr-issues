@@ -181,6 +181,8 @@ function output_list(issues) {
         }    
     }
 
+    var total_open = 0;
+
     for (chapter_name of chapter_names) {
         var chapter = chapters[chapter_name];
         var ui_chapter = new_chapter_div(div);
@@ -203,7 +205,10 @@ function output_list(issues) {
         } else {
             output_message(ui_chapter, "No issues");
         }
+        total_open += open;
     }
+
+    output_chapter_summary("Total", "", total_open, 0);
 }
 
 function get_json_issues(prev_issues = [], page = 1) {
