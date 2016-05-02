@@ -211,7 +211,11 @@ function output_list(issues) {
     output_chapter_summary("Total", "", total_open, 0);
 }
 
-function get_json_issues(prev_issues = [], page = 1) {
+function get_json_issues(prev_issues, page) {
+    
+    if (prev_issues === undefined) prev_issues = [];
+    if (page === undefined) page = 1;
+
     console.log('getting issues for page ' + page);
     httpGetAsync(
         'https://api.github.com/repos/w3c/svgwg/issues?state=all&milestone=1&page='+page,
