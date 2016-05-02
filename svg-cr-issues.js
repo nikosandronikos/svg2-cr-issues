@@ -60,6 +60,20 @@ function output_issue_to_list(list, issue) {
 
     div.appendChild(link);
     div.appendChild(name);
+
+    for (label of issue.labels) {
+        switch (label.name) {
+            case "Resolved":
+            case "Editing":
+            case "Proposal":
+                var status = document.createElement("span");
+                status.innerHTML = label.name;
+                status.setAttribute("class", "issue-status");
+                status.setAttribute("style", "background: #"+label.color);
+                div.appendChild(status);
+        }
+    }
+    console.log(label);
 }
 
 function output_message(parent, message) {
