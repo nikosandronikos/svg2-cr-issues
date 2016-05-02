@@ -72,7 +72,7 @@ function output_issue_to_list(list, issue) {
         issue_details_container.appendChild(assigned);
     }
 
-    for (label of issue.labels) {
+    for (var label of issue.labels) {
         switch (label.name) {
             case "Resolved":
             case "Editing":
@@ -173,8 +173,8 @@ function output_list(issues) {
     var chapter_names = Object.keys(chapters);
     var div = document.querySelector("#issues");
 
-    for (issue of issues) {
-        for (label of issue.labels) {
+    for (var issue of issues) {
+        for (var label of issue.labels) {
             //if (chapter_names.includes(label.name)) {
             if (chapter_names.indexOf(label.name) > -1) {
                 chapters[label.name].issues.push(issue);
@@ -184,7 +184,7 @@ function output_list(issues) {
 
     var total_open = 0;
 
-    for (chapter_name of chapter_names) {
+    for (var chapter_name of chapter_names) {
         var chapter = chapters[chapter_name];
         var ui_chapter = new_chapter_div(div);
         var ui_issue_list = new_issue_list(ui_chapter, chapter_name, chapter.owner);
@@ -192,7 +192,7 @@ function output_list(issues) {
         var closed = 0;
 
         if (chapter.issues.length > 0) {
-            for (issue of chapter.issues) {
+            for (var issue of chapter.issues) {
                 if (issue.state == "open") {
                     open ++;
                     output_issue_to_list(ui_issue_list.open_list, issue);
