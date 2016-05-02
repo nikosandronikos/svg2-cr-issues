@@ -209,7 +209,7 @@ function output_list(issues) {
 function get_json_issues(prev_issues = [], page = 1) {
     console.log('getting issues for page ' + page);
     httpGetAsync(
-        'https://api.github.com/repos/w3c/svgwg/issues?state=all&page='+page,
+        'https://api.github.com/repos/w3c/svgwg/issues?state=all&milestone=1&page='+page,
         issue_json_received,
         { "prev_issues": prev_issues, "page": page}
     );
