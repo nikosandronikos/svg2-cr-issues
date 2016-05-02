@@ -45,21 +45,32 @@ function output_issue_to_list(list, issue) {
     var li = document.createElement("li");
     li.setAttribute("id", "issue_"+issue.number);
     list.appendChild(li); 
-    
-    var div = document.createElement("div");
-    div.setAttribute("class", "issue-details");
-    li.appendChild(div);
-
+   
     var link = document.createElement("a");
     link.setAttribute("href", "https://github.com/w3c/svgwg/issues/" + issue.number);
-    link.setAttribute("class", "issue-number");
     link.innerHTML = issue.number;
 
-    var name = document.createElement("span")
+    var issue_num_container = document.createElement("div");
+    issue_num_container.setAttribute("class", "issue-number");
+    issue_num_container.appendChild(link);
+    li.appendChild(issue_num_container);
+ 
+    var issue_details_container = document.createElement("div");
+    issue_details_container.setAttribute("class", "issue-details");
+    li.appendChild(issue_details_container);
+
+    var name = document.createElement("div")
+    name.setAttribute("class", "issue-name");
     name.innerHTML = escapeXML(issue.title);
 
-    div.appendChild(link);
-    div.appendChild(name);
+    issue_details_container.appendChild(name);
+
+    if (issue.state == "open" && issue.assignee) {
+        var assigned = document.createElement("div");
+        assigned.setAttribute("class", "issue-owner");
+        assigned.innerHTML = "Assigned to: " + issue.assignee.login;
+        issue_details_container.appendChild(assigned);
+    }
 
     for (label of issue.labels) {
         switch (label.name) {
@@ -70,11 +81,11 @@ function output_issue_to_list(list, issue) {
                 status.innerHTML = label.name;
                 status.setAttribute("class", "issue-status");
                 status.setAttribute("style", "background: #"+label.color);
-                div.appendChild(status);
+                name.appendChild(status);
         }
     }
-    console.log(label);
-}
+
+ }
 
 function output_message(parent, message) {
     var o = document.createElement("div");

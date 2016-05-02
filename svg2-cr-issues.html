@@ -32,6 +32,7 @@
     .chapter {
         width: 800px;
         margin-bottom: 3em;
+        box-shadow: rgba(0,0,0,0.3) 2px 1px 0px 0px;
     }
 
     .table-header {
@@ -74,18 +75,19 @@
 
     .table-body > li {
         position: relative;
-        display: table-row;
+        display: block;
         list-style: none;
-    }
-
-    .table-body > li > div {
-        border-bottom: 1px solid #e5e5e5;
-        padding-top: 12px;
         padding-top: 10px;
         padding-bottom: 20px;
         padding-left: 20px;
+        height: 60px;
+        border-bottom: 1px dashed #e5e5e5;
     }
-
+    
+    .table-body > li:last-child {
+        border-bottom: none;
+    }
+    
     a, a:visited {
         text-decoration: none;
         color: #555;
@@ -98,7 +100,7 @@
     .closed-issues {
         text-decoration: line-through;
     }
-    
+
     .issue-number {
         margin-right: 1em;
         font-size: 1.3em;
@@ -112,21 +114,35 @@
         font-size: 1.2em;
     }
 
+    .issue-details {
+        margin-left: 3em;
+    }
+
+    .issue-name {
+    }
+
+    .issue-owner {
+        margin-top: 0.3em;
+        font-size: 0.8em;
+        color: #BBB;
+    }
+
+    .issue-status {
+        color: white;
+        margin-right: 1em;
+        padding: 2px;
+        border-radius: 4px 4px 4px 4px;
+        background: black;
+        box-shadow: rgba(0,0,0,0.5) -1px -1px 1px 0px inset;
+        float: right;
+    }
+
     #issue_summary {
         position: fixed;
         top: 20px;
         left: 2px;
         width: 25%;
         
-    }
-
-    .issue-status {
-        color: white;
-        margin-left: 2em;
-        padding: 2px;
-        border-radius: 4px 4px 4px 4px;
-        background: black;
-        box-shadow: rgba(0,0,0,0.5) -1px -1px 1px 0px inset;
     }
 
     #issue_summary > h2 {
@@ -136,6 +152,8 @@
     .index-table {
         padding-left: 0px;
         border: 1px solid #e5e5e5;
+        border-radius: 3px;
+        box-shadow: rgba(0,0,0,0.3) 2px 1px 0px 0px;
     }
 
     .index-table td {
@@ -145,6 +163,8 @@
     .index-table > thead td {
         background-color: #f8f8f8;
         font-weight: bold;
+        padding-top: 0.2em;
+        padding-bottom: 0.4em;
     }
 
     .index-table > ul > li, .index-table > .index-table-header {
