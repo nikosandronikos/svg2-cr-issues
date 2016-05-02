@@ -175,7 +175,8 @@ function output_list(issues) {
 
     for (issue of issues) {
         for (label of issue.labels) {
-            if (chapter_names.includes(label.name)) {
+            //if (chapter_names.includes(label.name)) {
+            if (chapter_names.indexOf(label.name) > -1) {
                 chapters[label.name].issues.push(issue);
             }
         }    
