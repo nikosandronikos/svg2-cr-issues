@@ -47,12 +47,19 @@ function output_issue_to_list(list, issue) {
     list.appendChild(li); 
     
     var div = document.createElement("div");
+    div.setAttribute("class", "issue-details");
     li.appendChild(div);
 
     var link = document.createElement("a");
     link.setAttribute("href", "https://github.com/w3c/svgwg/issues/" + issue.number);
-    link.innerHTML = escapeXML(issue.title);
+    link.setAttribute("class", "issue-number");
+    link.innerHTML = issue.number;
+
+    var name = document.createElement("span")
+    name.innerHTML = escapeXML(issue.title);
+
     div.appendChild(link);
+    div.appendChild(name);
 }
 
 function output_message(parent, message) {
@@ -169,7 +176,7 @@ function output_list(issues) {
             write_list_header(ui_issue_list, open, closed);
             output_chapter_summary(chapter_name, chapter.owner, open, closed);
         } else {
-            output_message(div, "No issues");
+            output_message(ui_chapter, "No issues");
         }
     }
 }

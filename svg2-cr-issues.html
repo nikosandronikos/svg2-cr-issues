@@ -31,6 +31,7 @@
 
     .chapter {
         width: 800px;
+        margin-bottom: 3em;
     }
 
     .table-header {
@@ -96,7 +97,20 @@
 
     .closed-issues {
         text-decoration: line-through;
-    }   
+    }
+    
+    .issue-number {
+        margin-right: 1em;
+        font-size: 1.3em;
+        width: 3em;
+        float: left;
+    }
+
+    .issue-number::before {
+        content: '#';
+        text-decoration: italic;
+        font-size: 1.2em;
+    }
 
     #issue_summary {
         position: fixed;
