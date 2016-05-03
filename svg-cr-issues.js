@@ -227,6 +227,13 @@ function output_list(issues) {
     output_chapter_summary("Total", "", total_open, 0);
 }
 
+function display(issues) {
+    output_list(issues);
+    document.querySelector("#loading").style.opacity = 0;
+    document.querySelector("#issue-summary").style.opacity = 1;
+    document.querySelector("#issues").style.opacity = 1;
+}
+
 function get_json_issues(prev_issues, page) {
     
     if (prev_issues === undefined) prev_issues = [];
@@ -241,13 +248,16 @@ function get_json_issues(prev_issues, page) {
 }
 
 function issue_json_received(responseText, user_data) {
+
+    document.querySelector("#progress").setCurrentTime(0.0);
+
     var prev_issues = user_data.prev_issues;
     var page = user_data.page;
     var issues = JSON.parse(responseText);
     if (issues.length > 0) {
         get_json_issues(prev_issues.concat(issues), page + 1);
     } else {
-        output_list(prev_issues);
+        display(prev_issues);
     }
 }
 
