@@ -178,8 +178,8 @@ function output_chapter_metadata(chapter_header, nopen, nclosed) {
 function output_list(issues) {
     var chapter_names = Object.keys(chapters);
 
-    for (let issue of issues) {
-        for (let label of issue.labels) {
+    for (var issue of issues) {
+        for (var label of issue.labels) {
             //if (chapter_names.includes(label.name)) {
             if (chapter_names.indexOf(label.name) > -1) {
                 chapters[label.name].issues.push(issue);
@@ -189,23 +189,23 @@ function output_list(issues) {
 
     var total_open = 0;
 
-    for (let chapter_name of chapter_names) {
-        let chapter = chapters[chapter_name];
-        let chapter_container = new_chapter_container
+    for (var chapter_name of chapter_names) {
+        var chapter = chapters[chapter_name];
+        var chapter_container = new_chapter_container
                                 (
                                     document.querySelector("#issues"),
                                     chapter_name,
                                     chapter.owner
                                 );
-        let header = new_chapter_header(chapter_container, chapter_name, chapter.owner);
-        let open = 0;
-        let closed = 0;
+        var header = new_chapter_header(chapter_container, chapter_name, chapter.owner);
+        var open = 0;
+        var closed = 0;
 
         if (chapter.issues.length > 0) {
-            let open_issues = new_issue_list(chapter_container);
-            let closed_issues = undefined;
+            var open_issues = new_issue_list(chapter_container);
+            var closed_issues = undefined;
     
-            for (let issue of chapter.issues) {
+            for (var issue of chapter.issues) {
                 if (issue.state == "open") {
                     open ++;
                     output_issue_to_list(open_issues, issue);
