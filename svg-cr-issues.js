@@ -94,53 +94,6 @@ function output_message(parent, message) {
     parent.appendChild(o);
 }
 
-function new_chapter_div(parent) {
-    var div = document.createElement("div");
-    div.setAttribute("class", "chapter");
-    parent.appendChild(div);
-    return div;        
-}
-
-function new_issue_list(parent, title, owner) {
-    var header = document.createElement("div");
-    header.setAttribute("class", "table-header");
-    header.setAttribute("id", title);
-    parent.appendChild(header);
-
-    var link = document.createElement("a");
-    link.setAttribute("href", "https://github.com/w3c/svgwg/issues?q=is%3Aissue+label%3A%22"+encodeURI(title)+"%22");
-    link.innerHTML = escapeXML(title);
-    header.appendChild(link);
-
-    var open_list = document.createElement("ul");
-    open_list.setAttribute("class", "table-body");
-    parent.appendChild(open_list);
-
-    var closed_list = document.createElement("ul");
-    closed_list.setAttribute("id", title+" Closed");
-    closed_list.setAttribute("class", "table-body closed-issues");
-    parent.appendChild(closed_list);
-
-    var metadata_div = document.createElement("div");
-    header.appendChild(metadata_div);
-    metadata_div.setAttribute("class", "metadata");
-    metadata_div.innerHTML = owner;
-
-    return {"header": header, "open_list": open_list, "closed_list": closed_list};
-}
-
-function write_list_header(list, open, closed) {
-    var open_elem = document.createElement("span");
-    open_elem .setAttribute("class", "num-open");
-    open_elem .innerHTML = open + " Open";
-    list.header.insertBefore(open_elem, list.header.querySelector(".metadata"));
-
-    var closed_elem = document.createElement("span");
-    closed_elem .setAttribute("class", "num-closed");
-    closed_elem .innerHTML = closed + " Closed";
-    list.header.insertBefore(closed_elem, list.header.querySelector(".metadata"));
-}
-
 function output_chapter_summary(chapter, owner, nopen, nclosed) {
     var list = document.querySelector("#issue-summary-list");
 
@@ -169,12 +122,64 @@ function output_chapter_summary(chapter, owner, nopen, nclosed) {
     list.appendChild(list_item);
 }
 
+function new_chapter_container(parent_container, chapter_name, chapter_owner) {
+    var container = document.createElement("div");
+    container.setAttribute("class", "chapter");
+    parent_container.appendChild(container);
+
+    return container;
+}
+
+function new_chapter_header(chapter_container, chapter_name, chapter_owner) {
+    var header_container = document.createElement("div");
+    header_container.setAttribute("class", "table-header");
+    header_container.setAttribute("id", chapter_name);
+    chapter_container.appendChild(header_container);
+
+    var title = document.createElement("a");
+    title.setAttribute("href", "https://github.com/w3c/svgwg/issues?q=is%3Aissue+label%3A%22"+encodeURI(title)+"%22");
+    title.innerHTML = escapeXML(chapter_name);
+    header_container.appendChild(title);
+    
+    var metadata_container = document.createElement("div");
+    metadata_container.setAttribute("id", "metadata");
+    header_container.appendChild(metadata_container);
+
+    var owner = document.createElement("div");
+    owner.setAttribute("class", "chapter-owner");
+    owner.innerHTML = chapter_owner;
+    header_container.appendChild(owner);
+
+    return header_container;
+}
+
+function new_issue_list(chapter_container) {
+    var list = document.createElement("ul");
+    list.setAttribute("class", "table-body");
+    chapter_container.appendChild(list);
+
+    return list;
+}
+
+function output_chapter_metadata(chapter_header, nopen, nclosed) {
+    var open = document.createElement("span");
+    open.setAttribute("class", "num-open");
+    open.innerHTML = nopen + " Open";
+
+    var closed = document.createElement("span");
+    closed.setAttribute("class", "num-closed");
+    closed.innerHTML = nclosed + " Closed";
+
+    var metadata_container = chapter_header.querySelector("#metadata");
+    metadata_container.appendChild(open);
+    metadata_container.appendChild(closed);
+}
+
 function output_list(issues) {
     var chapter_names = Object.keys(chapters);
-    var div = document.querySelector("#issues");
 
-    for (var issue of issues) {
-        for (var label of issue.labels) {
+    for (let issue of issues) {
+        for (let label of issue.labels) {
             //if (chapter_names.includes(label.name)) {
             if (chapter_names.indexOf(label.name) > -1) {
                 chapters[label.name].issues.push(issue);
@@ -184,27 +189,37 @@ function output_list(issues) {
 
     var total_open = 0;
 
-    for (var chapter_name of chapter_names) {
-        var chapter = chapters[chapter_name];
-        var ui_chapter = new_chapter_div(div);
-        var ui_issue_list = new_issue_list(ui_chapter, chapter_name, chapter.owner);
-        var open = 0;
-        var closed = 0;
+    for (let chapter_name of chapter_names) {
+        let chapter = chapters[chapter_name];
+        let chapter_container = new_chapter_container
+                                (
+                                    document.querySelector("#issues"),
+                                    chapter_name,
+                                    chapter.owner
+                                );
+        let header = new_chapter_header(chapter_container, chapter_name, chapter.owner);
+        let open = 0;
+        let closed = 0;
 
         if (chapter.issues.length > 0) {
-            for (var issue of chapter.issues) {
+            let open_issues = new_issue_list(chapter_container);
+            let closed_issues = undefined;
+    
+            for (let issue of chapter.issues) {
                 if (issue.state == "open") {
                     open ++;
-                    output_issue_to_list(ui_issue_list.open_list, issue);
+                    output_issue_to_list(open_issues, issue);
                 } else {
+                    if (closed_issues === undefined)
+                       closed_issues = new_issue_list(chapter_container);
                     closed ++;
-                    output_issue_to_list(ui_issue_list.closed_list, issue);
+                    output_issue_to_list(closed_issues, issue);
                 }
             }
-            write_list_header(ui_issue_list, open, closed);
+            output_chapter_metadata(header, open, closed);
             output_chapter_summary(chapter_name, chapter.owner, open, closed);
         } else {
-            output_message(ui_chapter, "No issues");
+            output_message(chapter_container, "No issues");
         }
         total_open += open;
     }
