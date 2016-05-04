@@ -59,8 +59,12 @@ function output_issue_to_list(list, issue) {
     issue_details_container.setAttribute("class", "issue-details");
     li.appendChild(issue_details_container);
 
-    var name = document.createElement("div")
-    name.setAttribute("class", "issue-name");
+    var name = document.createElement("div");
+    if (issue.state == "closed") {
+        name.setAttribute("class", "issue-name closed-issue");
+    } else {
+        name.setAttribute("class", "issue-name");
+    }
     name.innerHTML = escapeXML(issue.title);
 
     issue_details_container.appendChild(name);
