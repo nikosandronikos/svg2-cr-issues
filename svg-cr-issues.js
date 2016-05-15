@@ -81,11 +81,16 @@ function output_issue_to_list(list, issue) {
             case "Resolved":
             case "Editing":
             case "Proposal":
+            case "Needs removal":
+            case "Needs resolution":
+            case "Needs WG input":
+            case "Needs editing":
                 var status = document.createElement("span");
                 status.innerHTML = label.name;
                 status.setAttribute("class", "issue-status");
                 status.setAttribute("style", "background: #"+label.color);
                 name.appendChild(status);
+                break;
         }
     }
 
