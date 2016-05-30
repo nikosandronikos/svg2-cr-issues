@@ -146,7 +146,7 @@ function new_chapter_header(chapter_container, chapter_name, chapter_owner) {
     chapter_container.appendChild(header_container);
 
     var title = document.createElement("a");
-    title.setAttribute("href", "https://github.com/w3c/svgwg/issues?q=is%3Aissue+label%3A%22"+encodeURI(title)+"%22");
+    title.setAttribute("href", "https://github.com/w3c/svgwg/issues?q=is%3Aissue+label%3A%22"+encodeURI(chapter_name)+"%22");
     title.innerHTML = escapeXML(chapter_name);
     header_container.appendChild(title);
     
@@ -226,10 +226,10 @@ function output_list(issues) {
                 }
             }
             output_chapter_metadata(header, open, closed);
-            output_chapter_summary(chapter_name, chapter.owner, open, closed);
         } else {
             output_message(chapter_container, "No issues");
         }
+        output_chapter_summary(chapter_name, chapter.owner, open, closed);
         total_open += open;
     }
 
