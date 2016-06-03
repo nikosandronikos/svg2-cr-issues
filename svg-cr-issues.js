@@ -85,6 +85,7 @@ function output_issue_to_list(list, issue) {
             case "Needs resolution":
             case "Needs WG input":
             case "Needs editing":
+            case "Needs data":
                 var status = document.createElement("span");
                 status.innerHTML = label.name;
                 status.setAttribute("class", "issue-status");
